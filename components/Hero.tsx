@@ -1,148 +1,148 @@
+import Image from "next/image";
+import type { CSSProperties } from "react";
+import portrait from "@/assets/portrait.webp";
 import { profile } from "@/data/profile";
 import { tr, ui, type Lang } from "@/lib/i18n";
 import { asset } from "@/lib/site";
+import { FlipWords } from "./Effects";
 import { UiIcon } from "./icons";
+import { TechIcon, techName } from "./TechIcon";
 
-/** Linhas de fluxo no fundo do hero (decorativas). */
-function HeroBackdrop() {
-  const paths = [
-    "M-20 120 C 220 60, 420 200, 700 130 S 1100 60, 1460 140",
-    "M-20 260 C 260 200, 520 330, 820 250 S 1180 190, 1460 280",
-    "M-20 420 C 300 360, 600 480, 900 400 S 1220 340, 1460 430",
-    "M-20 560 C 240 520, 560 620, 860 540 S 1200 500, 1460 580",
-  ];
+type Vars = CSSProperties & Record<`--${string}`, string | number>;
+
+/** Linhas que correm ao fundo (adaptado do "Background Paths" — kokonutd, 21st.dev, MIT). */
+function BackgroundPaths() {
+  const make = (pos: number) =>
+    Array.from({ length: 16 }, (_, i) => {
+      const o = i * 5 * pos;
+      const v = i * 6;
+      return {
+        d: `M-${380 - o} -${189 + v}C-${380 - o} -${189 + v} -${312 - o} ${216 - v} ${152 - o} ${343 - v}C${616 - o} ${470 - v} ${684 - o} ${875 - v} ${684 - o} ${875 - v}`,
+        w: 0.4 + i * 0.03,
+        op: 0.05 + i * 0.016,
+        dur: 16 + ((i * 7) % 13),
+      };
+    });
   return (
-    <svg
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-0 h-full w-full opacity-60"
-      viewBox="0 0 1440 680"
-      preserveAspectRatio="xMidYMid slice"
-      fill="none"
-    >
-      {paths.map((d, i) => (
-        <g key={i}>
-          <path d={d} stroke="var(--line)" strokeWidth={1} />
-          <path d={d} stroke="var(--accent)" strokeOpacity={0.35} strokeWidth={1.2} className="flow-line" style={{ animationDuration: `${1.6 + i * 0.4}s` }} />
-        </g>
-      ))}
+    <svg viewBox="0 0 696 316" fill="none" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full">
+      {[1, -1].map((pos) =>
+        make(pos).map((p, i) => (
+          <path
+            key={`${pos}-${i}`}
+            d={p.d}
+            pathLength={1}
+            strokeWidth={p.w}
+            strokeOpacity={p.op}
+            className="bg-path"
+            style={{ "--d": `${p.dur}s`, animationDelay: `-${i * 1.7}s` } as Vars}
+          />
+        )),
+      )}
     </svg>
   );
 }
 
-/** Cartão com o pipeline medalhão animado. */
-function HeroPipeline({ lang }: { lang: Lang }) {
-  const pt = lang === "pt";
-  const sources = [
-    { x: 80, label: "API REST" },
-    { x: 200, label: pt ? "Bancos SQL" : "SQL DBs" },
-    { x: 320, label: pt ? "Eventos" : "Events" },
-  ];
-  const layers = [
-    { y: 132, tone: "bronze", name: "BRONZE", desc: pt ? "dado bruto, rastreável" : "raw, traceable" },
-    { y: 198, tone: "silver", name: "SILVER", desc: pt ? "limpo, tipado, sem duplicatas" : "clean, typed, deduplicated" },
-    { y: 264, tone: "gold", name: "GOLD", desc: pt ? "modelado para o negócio" : "business-ready model" },
-  ];
-  const flows = sources.map((s) => `M${s.x} 96 C${s.x} 116, 200 112, 200 132 V 322`);
+/** Foto com tecnologias orbitando (inspirado no "Radial Orbital" — 21st.dev). */
+function PortraitOrbit({ lang }: { lang: Lang }) {
+  const { outer, inner } = profile.orbit;
   return (
-    <figure className="relative mx-auto w-full max-w-md">
-      <div aria-hidden="true" className="absolute -inset-6 rounded-[2rem] bg-[radial-gradient(closest-side,var(--glow),transparent)]" />
-      <svg
-        viewBox="0 0 400 364"
-        role="img"
-        aria-label={
-          pt
-            ? "Ilustração de um pipeline na Arquitetura Medalhão: APIs, bancos e eventos passam pelas camadas Bronze, Silver e Gold até virar BI e decisões."
-            : "Illustration of a Medallion Architecture pipeline: APIs, databases and events flow through Bronze, Silver and Gold layers into BI and decisions."
-        }
-        className="relative block h-auto w-full"
-      >
-        <rect x={0.5} y={0.5} width={399} height={363} rx={18} fill="var(--surface)" stroke="var(--line-strong)" />
-        <line x1={0} x2={400} y1={38} y2={38} stroke="var(--line)" />
-        {[18, 32, 46].map((cx) => (
-          <circle key={cx} cx={cx} cy={19} r={4} fill="var(--line-strong)" />
-        ))}
-        <text x={62} y={23} fontSize={11} className="font-mono" fill="var(--muted)">
-          medallion_pipeline
-        </text>
-        <circle cx={318} cy={19} r={3.5} fill="var(--ok)" className="pulse-dot" />
-        <text x={328} y={23} fontSize={10.5} className="font-mono" fill="var(--ok)">
-          running
-        </text>
+    <div className="fade-up orbit relative mx-auto aspect-square w-full max-w-[340px] sm:max-w-[440px]" style={{ "--delay": "0.35s" } as Vars}>
+      <div aria-hidden="true" className="absolute inset-[4%] rounded-full border border-line" />
+      <div aria-hidden="true" className="absolute inset-[16%] rounded-full border border-dashed border-line" />
+      <div aria-hidden="true" className="absolute inset-[18%] rounded-full bg-[radial-gradient(closest-side,var(--glow),transparent)]" />
 
-        {flows.map((d, i) => (
-          <g key={i}>
-            <path d={d} fill="none" stroke="var(--line-strong)" strokeWidth={1.2} />
-            <path d={d} fill="none" stroke="var(--accent)" strokeWidth={1.4} className="flow-line" />
-          </g>
-        ))}
+      <div className="absolute inset-[27%] overflow-hidden rounded-full border border-line-strong shadow-[0_0_90px_-20px_var(--accent)]">
+        <Image
+          src={portrait}
+          alt={lang === "pt" ? "Foto de Alexandre Soares" : "Photo of Alexandre Soares"}
+          fill
+          priority
+          sizes="(min-width: 640px) 240px, 190px"
+          className="object-cover"
+        />
+        <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(200deg,transparent_45%,rgb(77_141_255/0.28))] mix-blend-screen" />
+      </div>
 
-        {sources.map((s) => (
-          <g key={s.label}>
-            <rect x={s.x - 50} y={64} width={100} height={32} rx={8} fill="var(--surface-2)" stroke="var(--line-strong)" />
-            <text x={s.x} y={84} textAnchor="middle" fontSize={11.5} fontWeight={600} className="font-sans" fill="var(--fg)">
-              {s.label}
-            </text>
-          </g>
+      <div aria-hidden="true" className="orbit-spin" style={{ "--dur": "80s" } as Vars}>
+        {outer.map((k, i) => (
+          <div key={k} className="orbit-item" style={{ "--a": `${(i * 360) / outer.length}deg`, "--r": "46cqw" } as Vars}>
+            <div className="orbit-upright border border-line bg-surface/85 text-fg-soft shadow-[0_8px_30px_-12px_rgb(0_0_0/0.8)] backdrop-blur" title={techName(k)}>
+              <TechIcon name={k} size={20} />
+            </div>
+          </div>
         ))}
-
-        {layers.map((l) => (
-          <g key={l.name}>
-            <rect x={60} y={l.y} width={280} height={40} rx={10} fill="var(--surface-2)" stroke={`var(--tone-${l.tone})`} strokeOpacity={0.7} />
-            <text x={76} y={l.y + 25} fontSize={11} fontWeight={700} letterSpacing={1.4} className="font-mono" fill={`var(--tone-${l.tone})`}>
-              {l.name}
-            </text>
-            <text x={326} y={l.y + 25} textAnchor="end" fontSize={11} className="font-sans" fill="var(--fg-soft)">
-              {l.desc}
-            </text>
-          </g>
+      </div>
+      <div aria-hidden="true" className="orbit-spin orbit-spin--rev" style={{ "--dur": "55s" } as Vars}>
+        {inner.map((k, i) => (
+          <div key={k} className="orbit-item" style={{ "--a": `${(i * 360) / inner.length + 45}deg`, "--r": "34cqw", "--s": "10cqw" } as Vars}>
+            <div className="orbit-upright border border-line bg-surface/85 text-fg-soft backdrop-blur" title={techName(k)}>
+              <TechIcon name={k} size={17} />
+            </div>
+          </div>
         ))}
+      </div>
 
-        <rect x={120} y={322} width={160} height={30} rx={15} fill="var(--accent)" fillOpacity={0.14} stroke="var(--accent)" strokeOpacity={0.7} />
-        <text x={200} y={341} textAnchor="middle" fontSize={11.5} fontWeight={600} className="font-sans" fill="var(--fg)">
-          {pt ? "BI · decisões" : "BI · decisions"}
-        </text>
-
-        {flows.map((d, i) => (
-          <circle key={i} r={3.2} fill="var(--accent)" className="packet">
-            <animateMotion dur="4.2s" begin={`${i * 1.4}s`} repeatCount="indefinite" path={d} />
-          </circle>
-        ))}
-      </svg>
-    </figure>
+      <span className="absolute -bottom-[7%] left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10.5px] tracking-[0.18em] text-muted">
+        SP · 23.55°S 46.63°W
+      </span>
+    </div>
   );
 }
 
 export function Hero({ lang }: { lang: Lang }) {
+  const pt = lang === "pt";
   return (
-    <section id="topo" className="relative overflow-hidden border-b border-line/60">
-      <div aria-hidden="true" className="hero-glow pointer-events-none absolute inset-0" />
-      <div aria-hidden="true" className="bg-grid pointer-events-none absolute inset-0" />
-      <HeroBackdrop />
-      <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-4 pb-20 pt-12 sm:px-6 sm:pt-20 lg:grid-cols-12 lg:pb-28 lg:pt-24">
+    <section id="topo" data-anim className="relative isolate flex min-h-[100svh] flex-col overflow-hidden">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div className="dot-grid absolute inset-0" />
+        <BackgroundPaths />
+        <div className="spotlight" />
+        <div className="spotlight spotlight--red" />
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-bg" />
+      </div>
+
+      <div className="mx-auto grid w-full max-w-6xl flex-1 items-center gap-14 px-4 pb-10 pt-28 sm:px-6 sm:pt-32 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-7">
-          <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-3 py-1 text-xs font-medium text-fg-soft">
-            <span className="pulse-dot size-2 rounded-full bg-ok" aria-hidden="true" />
-            {tr(ui.hero.available, lang)}
+          <p className="fade-up flex items-center gap-2.5 font-mono text-xs text-muted" style={{ "--delay": "0.05s" } as Vars}>
+            <span className="relative flex size-2">
+              <span className="pulse-dot absolute inset-0 rounded-full bg-ok" />
+              <span className="relative size-2 rounded-full bg-ok" />
+            </span>
+            {pt ? "Disponível · remoto ou híbrido" : "Available · remote or hybrid"}
           </p>
-          <h1 className="mt-6 text-[2.6rem] font-extrabold leading-[1.05] tracking-tight text-fg sm:text-6xl">
-            {profile.name}
-            <span className="mt-3 block font-mono text-xl font-semibold tracking-normal sm:text-3xl">
-              <span className="text-gradient">{tr(profile.role, lang)}</span>
+
+          <h1 className="mt-7 text-[clamp(3.1rem,9.5vw,6.75rem)] font-semibold leading-[0.9] tracking-[-0.05em] text-fg">
+            <span className="blur-in" style={{ "--i": 0 } as Vars}>Alexandre</span>{" "}
+            <span className="blur-in" style={{ "--i": 1 } as Vars}>Soares</span>
+            <span className="sr-only">, </span>
+            <span className="mt-5 block text-[clamp(1.7rem,4.2vw,3rem)] font-normal leading-[1.05] tracking-[-0.03em] text-fg-soft">
+              <span className="blur-in" style={{ "--i": 2 } as Vars}>{pt ? "Engenheiro de" : "Data"}</span>{" "}
+              <span className="blur-in font-serif text-[1.12em] italic tracking-normal text-fg" style={{ "--i": 3 } as Vars}>
+                {pt ? "Dados" : "Engineer"}
+              </span>
             </span>
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-fg-soft">{tr(profile.tagline, lang)}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
+
+          <p className="fade-up mt-8 text-lg text-fg-soft sm:text-xl" style={{ "--delay": "0.65s" } as Vars}>
+            {pt ? "Pipelines e lakehouses em " : "Pipelines and lakehouses on "}
+            <FlipWords words={profile.flipWords} className="font-medium text-accent" />
+          </p>
+          <p className="fade-up mt-4 max-w-xl leading-relaxed text-muted" style={{ "--delay": "0.75s" } as Vars}>
+            {tr(profile.intro, lang)}
+          </p>
+
+          <div className="fade-up mt-10 flex flex-wrap items-center gap-3" style={{ "--delay": "0.9s" } as Vars}>
             <a
               href="#projects"
-              className="inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-3 text-sm font-semibold text-accent-ink shadow-[0_0_0_1px_var(--accent),0_8px_30px_-8px_var(--accent)] transition-transform hover:-translate-y-0.5"
+              className="beam-border group inline-flex h-12 items-center gap-2 rounded-full bg-fg px-6 text-sm font-semibold text-bg transition-transform hover:-translate-y-0.5"
             >
               {tr(ui.hero.seeProjects, lang)}
-              <UiIcon name="arrowRight" size={16} />
+              <UiIcon name="arrowRight" size={16} className="transition-transform group-hover:translate-x-0.5" />
             </a>
             <a
               href={asset(profile.links.cv)}
               download
-              className="inline-flex items-center gap-2 rounded-lg border border-line-strong bg-surface px-5 py-3 text-sm font-semibold text-fg transition-colors hover:border-accent"
+              className="inline-flex h-12 items-center gap-2 rounded-full border border-line-strong px-5 text-sm font-medium text-fg transition-colors hover:bg-glass"
             >
               <UiIcon name="download" size={16} />
               {tr(ui.hero.downloadCv, lang)}
@@ -151,24 +151,34 @@ export function Hero({ lang }: { lang: Lang }) {
               href={profile.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg border border-line-strong bg-surface px-5 py-3 text-sm font-semibold text-fg transition-colors hover:border-accent"
+              className="inline-flex h-12 items-center gap-2 rounded-full px-4 text-sm font-medium text-fg-soft transition-colors hover:text-fg"
             >
               <UiIcon name="linkedin" size={16} />
-              {tr(ui.hero.linkedin, lang)}
-              <span className="sr-only">{lang === "pt" ? "(abre em nova aba)" : "(opens in a new tab)"}</span>
+              LinkedIn
+              <span className="sr-only">{pt ? "(abre em nova aba)" : "(opens in a new tab)"}</span>
             </a>
           </div>
-          <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-4">
-            {profile.highlights.map((h) => (
-              <div key={h.value} className="flex flex-col-reverse border-l-2 border-accent/60 pl-3">
-                <dt className="mt-1 text-xs leading-snug text-muted">{tr(h.label, lang)}</dt>
-                <dd className="font-mono text-lg font-bold text-fg">{lang === "en" && h.valueEn ? h.valueEn : h.value}</dd>
+        </div>
+
+        <div className="lg:col-span-5">
+          <PortraitOrbit lang={lang} />
+        </div>
+      </div>
+
+      <div className="fade-up mx-auto w-full max-w-6xl px-4 sm:px-6" style={{ "--delay": "1.1s" } as Vars}>
+        <div className="flex items-end justify-between gap-8 border-t border-line py-6">
+          <dl className="grid flex-1 gap-5 sm:grid-cols-3">
+            {profile.facts.map((f) => (
+              <div key={f.label.pt}>
+                <dt className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">{tr(f.label, lang)}</dt>
+                <dd className="mt-1.5 text-sm text-fg">{tr(f.value, lang)}</dd>
               </div>
             ))}
           </dl>
-        </div>
-        <div className="hidden sm:block lg:col-span-5">
-          <HeroPipeline lang={lang} />
+          <a href="#about" className="hidden flex-col items-center gap-3 font-mono text-[11px] uppercase tracking-[0.14em] text-muted hover:text-fg lg:flex">
+            {tr(ui.hero.scroll, lang)}
+            <span aria-hidden="true" className="scroll-cue block h-12 w-px bg-line-strong" />
+          </a>
         </div>
       </div>
     </section>

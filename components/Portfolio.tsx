@@ -2,9 +2,10 @@ import { profile } from "@/data/profile";
 import { tr, type Lang } from "@/lib/i18n";
 import { siteUrl } from "@/lib/site";
 import { Hero } from "./Hero";
-import { About, Building, Contact, Education, Experience, Footer, Lab, Projects, Stack, Zenith } from "./Sections";
+import { About, Building, Education, Experience, Lab, Projects, Stack, Zenith } from "./Sections";
 import { SiteHeader } from "./SiteHeader";
 import { TechIconSprite } from "./TechIcon";
+import { CinematicFooter } from "./ui/motion-footer";
 
 function JsonLd({ lang }: { lang: Lang }) {
   const data = {
@@ -42,20 +43,15 @@ function JsonLd({ lang }: { lang: Lang }) {
     ],
     sameAs: [profile.links.linkedin, profile.links.github, profile.links.instagram],
   };
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
-    />
-  );
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />;
 }
 
 export function Portfolio({ lang }: { lang: Lang }) {
   return (
-    <div lang={lang === "en" ? "en" : undefined} className="flex min-h-full flex-col">
+    <div lang={lang === "en" ? "en" : undefined}>
       <TechIconSprite />
       <SiteHeader lang={lang} />
-      <main id="conteudo" tabIndex={-1} className="flex-1 outline-none">
+      <main id="conteudo" tabIndex={-1} className="relative z-10 bg-bg outline-none">
         <Hero lang={lang} />
         <About lang={lang} />
         <Stack lang={lang} />
@@ -65,9 +61,8 @@ export function Portfolio({ lang }: { lang: Lang }) {
         <Building lang={lang} />
         <Zenith lang={lang} />
         <Education lang={lang} />
-        <Contact lang={lang} />
       </main>
-      <Footer lang={lang} />
+      <CinematicFooter lang={lang} />
       <JsonLd lang={lang} />
     </div>
   );

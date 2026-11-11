@@ -10,19 +10,32 @@ export const profile = {
   name: "Alexandre Soares",
   fullName: "Alexandre Soares Leite Lopes",
   role: { pt: "Engenheiro de Dados", en: "Data Engineer" } as L,
+  /** Frase curta usada no SEO e no JSON-LD. */
   tagline: {
-    pt: "Transformo dados brutos em decisões confiáveis com pipelines escaláveis em GCP, Azure e Databricks.",
-    en: "I turn raw data into reliable decisions with scalable pipelines on GCP, Azure and Databricks.",
+    pt: "Engenheiro de Dados Cloud: pipelines ETL/ELT, Lakehouse e qualidade de dados em GCP, Azure e Databricks.",
+    en: "Cloud Data Engineer: ETL/ELT pipelines, Lakehouse and data quality on GCP, Azure and Databricks.",
   } as L,
+  /** Texto do topo da página. */
+  intro: {
+    pt: "Hoje cuido da qualidade de dados bancários no Bradesco, pela TDW BI Consulting. Antes, construí pipelines de ponta a ponta em GCP e Azure, da API ao dashboard.",
+    en: "Today I look after banking data quality at Bradesco, through TDW BI Consulting. Before that, I built end-to-end pipelines on GCP and Azure, from API to dashboard.",
+  } as L,
+  /** Palavras que giram no topo ("Pipelines e lakehouses em ___"). */
+  flipWords: ["Google Cloud", "BigQuery", "Azure", "Databricks", "PySpark"],
   location: { pt: "São Paulo, SP · Brasil", en: "São Paulo, Brazil" } as L,
 
-  /** Números que aparecem no topo. Só fatos do currículo. */
-  highlights: [
-    { value: "Desde 2022", valueEn: "Since 2022", label: { pt: "atuando com dados", en: "working with data" } },
-    { value: "GCP + Azure", label: { pt: "duas nuvens em produção", en: "two clouds in production" } },
-    { value: "até 30%", valueEn: "up to 30%", label: { pt: "menos custo de nuvem após tuning", en: "lower cloud cost after tuning" } },
-    { value: "Medallion", label: { pt: "Bronze · Silver · Gold", en: "Bronze · Silver · Gold" } },
-  ] as { value: string; valueEn?: string; label: L }[],
+  /** Três fatos rápidos no rodapé do topo. */
+  facts: [
+    { label: { pt: "Agora", en: "Now" }, value: { pt: "Data Quality · Bradesco", en: "Data Quality · Bradesco" } },
+    { label: { pt: "Nuvens", en: "Clouds" }, value: { pt: "GCP e Azure, desde 2022", en: "GCP and Azure, since 2022" } },
+    { label: { pt: "Base", en: "Based in" }, value: { pt: "São Paulo · remoto ou híbrido", en: "São Paulo · remote or hybrid" } },
+  ] as { label: L; value: L }[],
+
+  /** Ícones que orbitam a foto. */
+  orbit: {
+    outer: ["bigquery", "databricks", "airflow", "terraform", "postgresql", "gcs", "pubsub"],
+    inner: ["python", "spark", "composer", "n8n"],
+  } as { outer: TechKey[]; inner: TechKey[] },
 
   links: {
     email: "alexandre2006sll@gmail.com",
@@ -36,9 +49,10 @@ export const profile = {
     cv: "/cv/Alexandre-Soares-CV-Engenheiro-de-Dados.pdf",
   },
 
+  /** Texto grande do "Sobre". Palavras entre *asteriscos* ficam em serifa itálica. */
   about: {
-    pt: "Engenheiro de dados com atuação desde 2022 no ciclo completo da informação: da ingestão e arquitetura até a entrega de valor para o negócio. Construo pipelines ETL/ELT em GCP e Azure, estruturo Data Lakes e Lakehouses na Arquitetura Medalhão e processo grandes volumes com PySpark e Databricks. Hoje atuo em Data Quality no setor financeiro e, pela Zenith Tech, entrego soluções de dados, cloud e sistemas para empresas.",
-    en: "Data engineer working since 2022 across the full data lifecycle: from ingestion and architecture to delivering business value. I build ETL/ELT pipelines on GCP and Azure, structure Data Lakes and Lakehouses with the Medallion Architecture and process large volumes with PySpark and Databricks. Today I work on Data Quality in the financial sector and, through Zenith Tech, deliver data, cloud and software solutions to companies.",
+    pt: "Engenheiro de dados com atuação desde 2022 no *ciclo completo* da informação: da ingestão e arquitetura até a entrega de valor para o negócio. Construo pipelines ETL/ELT em GCP e Azure, estruturo Data Lakes e Lakehouses na Arquitetura Medalhão e processo grandes volumes com PySpark e Databricks. Hoje atuo em Data Quality no setor financeiro e, pela Zenith Tech, entrego soluções de dados, cloud e sistemas para empresas.",
+    en: "Data engineer working since 2022 across the *full* data lifecycle: from ingestion and architecture to delivering business value. I build ETL/ELT pipelines on GCP and Azure, structure Data Lakes and Lakehouses with the Medallion Architecture and process large volumes with PySpark and Databricks. Today I work on Data Quality in the financial sector and, through Zenith Tech, deliver data, cloud and software solutions to companies.",
   } as L,
 
   /** Os quatro pilares (texto do seu post "Minha Base"). */

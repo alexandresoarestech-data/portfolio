@@ -1,59 +1,65 @@
 @import "tailwindcss";
 
-/* ---------- Tokens de cor (tema escuro é o padrão) ---------- */
+/* ============================================================
+   Tokens — preto, branco e azul elétrico. Escuro é o padrão.
+   ============================================================ */
 :root,
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #060a13;
-  --bg-soft: #0a1020;
-  --surface: #0d1526;
-  --surface-2: #121c31;
-  --line: #1d2a44;
-  --line-strong: #2b3c5f;
-  --fg: #e7eef8;
-  --fg-soft: #c3cfdf;
-  --muted: #93a4bd;
-  --accent: #22d3ee;
-  --accent-2: #60a5fa;
-  --accent-ink: #03141c;
-  --ok: #34d399;
-  --glow: rgb(34 211 238 / 0.16);
-  --grid: rgb(148 163 184 / 0.07);
+  --bg: #060606;
+  --bg-soft: #0b0b0c;
+  --surface: #0e0e10;
+  --surface-2: #151517;
+  --glass: rgb(255 255 255 / 0.035);
+  --line: rgb(255 255 255 / 0.09);
+  --line-strong: rgb(255 255 255 / 0.18);
+  --fg: #f4f4f2;
+  --fg-soft: #cfcfcb;
+  --muted: #8f8f8a;
+  --accent: #4d8dff;
+  --accent-2: #9cc0ff;
+  --accent-ink: #050608;
+  --ok: #4ade80;
+  --glow: rgb(77 141 255 / 0.2);
+  --grid: rgb(255 255 255 / 0.045);
+  --path: 255 255 255;
 
-  --tone-source: #a5b4c8;
-  --tone-ingest: #22d3ee;
-  --tone-event: #b39dfa;
-  --tone-bronze: #e09a63;
-  --tone-silver: #c6d0de;
-  --tone-gold: #f2c14e;
-  --tone-consume: #6cb0ff;
+  --tone-source: #a3a3a0;
+  --tone-ingest: #5c97ff;
+  --tone-event: #a5b4fc;
+  --tone-bronze: #cf905d;
+  --tone-silver: #cdcdc9;
+  --tone-gold: #dcb553;
+  --tone-consume: #9cc0ff;
 }
 
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg: #f6f8fc;
-  --bg-soft: #eef2f8;
+  --bg: #fafaf8;
+  --bg-soft: #f2f2ef;
   --surface: #ffffff;
-  --surface-2: #f1f5fb;
-  --line: #dbe3ef;
-  --line-strong: #c3cfe0;
-  --fg: #0b1324;
-  --fg-soft: #27344a;
-  --muted: #4a5a72;
-  --accent: #0e7490;
-  --accent-2: #1d4ed8;
+  --surface-2: #f4f4f1;
+  --glass: rgb(0 0 0 / 0.025);
+  --line: rgb(0 0 0 / 0.09);
+  --line-strong: rgb(0 0 0 / 0.18);
+  --fg: #0a0a0a;
+  --fg-soft: #2b2b2a;
+  --muted: #5f5f5a;
+  --accent: #1f5eff;
+  --accent-2: #0b3fd6;
   --accent-ink: #ffffff;
-  --ok: #047857;
-  --glow: rgb(14 116 144 / 0.1);
-  --grid: rgb(15 23 42 / 0.06);
+  --ok: #15803d;
+  --glow: rgb(31 94 255 / 0.12);
+  --grid: rgb(0 0 0 / 0.05);
+  --path: 10 10 10;
 
-  --tone-source: #5b6b82;
-  --tone-ingest: #0e7490;
-  --tone-event: #6d28d9;
-  --tone-bronze: #9a531c;
-  --tone-silver: #56657c;
-  --tone-gold: #855000;
-  --tone-consume: #1d4ed8;
+  --tone-source: #5f5f5a;
+  --tone-ingest: #1d4fd8;
+  --tone-event: #4f46e5;
+  --tone-bronze: #93511c;
+  --tone-silver: #5c5c58;
+  --tone-gold: #7f5c00;
+  --tone-consume: #1d4fd8;
 }
 
 @theme inline {
@@ -61,6 +67,7 @@
   --color-bg-soft: var(--bg-soft);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
+  --color-glass: var(--glass);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-fg: var(--fg);
@@ -70,17 +77,20 @@
   --color-accent-2: var(--accent-2);
   --color-accent-ink: var(--accent-ink);
   --color-ok: var(--ok);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, "Cascadia Code", monospace;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "Cascadia Code", monospace;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
 }
 
-/* ---------- Base ---------- */
+/* ============================================================
+   Base
+   ============================================================ */
 html {
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 6rem;
   -webkit-text-size-adjust: 100%;
 }
 @media (prefers-reduced-motion: no-preference) {
-  html {
+  html:not(.lenis) {
     scroll-behavior: smooth;
   }
 }
@@ -88,11 +98,12 @@ body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
   text-rendering: optimizeLegibility;
 }
 ::selection {
   background: var(--accent);
-  color: var(--accent-ink);
+  color: #fff;
 }
 :focus-visible {
   outline: 2px solid var(--accent);
@@ -100,33 +111,611 @@ body {
   border-radius: 6px;
 }
 
-/* ---------- Elementos que só aparecem em um tema ---------- */
+/* Lenis (scroll suave) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* Elementos que só aparecem em um tema */
 :root[data-theme="light"] .only-dark,
 :root:not([data-theme="light"]) .only-light {
   display: none;
 }
 
-/* ---------- Fundo em grade (hero) ---------- */
-.bg-grid {
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 35%, transparent 80%);
+/* Grão de filme por cima de tudo (textura, nada de "plástico") */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-.hero-glow {
-  background:
-    radial-gradient(40rem 22rem at 15% 10%, var(--glow), transparent 70%),
-    radial-gradient(34rem 20rem at 85% 30%, rgb(96 165 250 / 0.1), transparent 70%);
-}
-.text-gradient {
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+:root[data-theme="light"] .grain {
+  opacity: 0.05;
 }
 
-/* ---------- Fluxo animado dos diagramas ---------- */
+/* Barra de progresso do scroll */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  z-index: 70;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: grow-x linear both;
+    animation-timeline: scroll(root);
+  }
+}
+@keyframes grow-x {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.dot-grid {
+  background-image: radial-gradient(var(--grid) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+}
+
+/* Spotlight (inspirado no "Spotlight" do 21st.dev / Aceternity) */
+.spotlight {
+  position: absolute;
+  pointer-events: none;
+  width: 140%;
+  height: 120%;
+  left: -40%;
+  top: -55%;
+  background: radial-gradient(closest-side, rgb(255 255 255 / 0.08), transparent);
+  filter: none;
+  transform: rotate(-28deg);
+  opacity: 0;
+  animation: spotlight 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+}
+.spotlight--red {
+  left: 30%;
+  top: -40%;
+  width: 110%;
+  background: radial-gradient(closest-side, var(--glow), transparent);
+  animation-delay: 0.8s;
+}
+:root[data-theme="light"] .spotlight {
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.05), transparent);
+}
+:root[data-theme="light"] .spotlight--red {
+  background: radial-gradient(closest-side, var(--glow), transparent);
+}
+@keyframes spotlight {
+  from {
+    opacity: 0;
+    transform: translate(-12%, -10%) rotate(-28deg) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0) rotate(-28deg) scale(1);
+  }
+}
+
+/* Background Paths (inspirado no "Background Paths" do 21st.dev / kokonutd) */
+.bg-path {
+  stroke: rgb(var(--path));
+  stroke-dasharray: 0.35 0.65;
+  animation: path-run var(--d, 24s) linear infinite;
+}
+@keyframes path-run {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Entrada do hero: palavras surgem do desfoque */
+.blur-in {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(14px);
+  transform: translateY(0.35em);
+  animation: blur-in 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: calc(var(--i, 0) * 90ms + 120ms);
+}
+.fade-up {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: blur-in 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: var(--delay, 0.5s);
+}
+@keyframes blur-in {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+/* Palavras que giram (inspirado no "Flip Words") */
+.flip-word {
+  display: inline-block;
+  animation: flip-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes flip-in {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(60%);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+/* Órbita de tecnologias em volta da foto (inspirado no "Radial Orbital") */
+.orbit {
+  container-type: inline-size;
+}
+.orbit-spin {
+  position: absolute;
+  inset: 0;
+  animation: spin var(--dur, 60s) linear infinite;
+}
+.orbit-spin--rev {
+  animation-direction: reverse;
+}
+.orbit-item {
+  --s: 12cqw;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--s);
+  height: var(--s);
+  margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+  transform: rotate(var(--a)) translateY(calc(var(--r) * -1)) rotate(calc(var(--a) * -1));
+}
+.orbit-upright {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  animation: spin var(--dur, 60s) linear infinite reverse;
+}
+.orbit-spin--rev .orbit-upright {
+  animation-direction: normal;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Feixe na borda (inspirado no "Border Beam") */
+.beam-border {
+  position: relative;
+  isolation: isolate;
+}
+.beam-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--beam-angle, 0deg), transparent 0 75%, var(--accent) 88%, #fff 92%, transparent 96%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: beam-rotate 4s linear infinite;
+  z-index: -1;
+}
+@property --beam-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes beam-rotate {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+/* Indicador de scroll */
+.scroll-cue {
+  position: relative;
+  overflow: hidden;
+}
+.scroll-cue::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: var(--accent);
+  animation: cue 2.2s cubic-bezier(0.6, 0, 0.2, 1) infinite;
+}
+@keyframes cue {
+  from {
+    top: -40%;
+  }
+  to {
+    top: 100%;
+  }
+}
+
+/* ============================================================
+   Efeitos de scroll (CSS scroll-driven, sem JavaScript)
+   ============================================================ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Revelação suave de blocos */
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+    /* Títulos: palavra por palavra, do desfoque para o nítido */
+    .h-word {
+      animation: h-word linear both;
+      animation-timeline: view();
+      animation-range: entry calc(5% + var(--i, 0) * 4%) cover calc(28% + var(--i, 0) * 3%);
+    }
+    /* Texto que acende conforme o scroll (inspirado no "Text Reveal") */
+    .tr-word {
+      animation: tr-word linear both;
+      animation-timeline: view();
+      animation-range: cover 18% cover 42%;
+    }
+    /* Painel que nasce inclinado em 3D e assenta (inspirado no "Container Scroll Animation") */
+    .tilt-in {
+      transform-origin: 50% 0%;
+      animation: tilt-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+    /* Feixe da linha do tempo (inspirado no "Tracing Beam") */
+    .trace-beam {
+      animation: trace linear both;
+      animation-timeline: view();
+      animation-range: cover 12% cover 88%;
+    }
+    .trace-dot {
+      animation: dot-on linear both;
+      animation-timeline: view();
+      animation-range: cover 25% cover 40%;
+    }
+    /* Nome gigante do rodapé */
+    .footer-name {
+      animation: footer-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 60%;
+    }
+    /* Cabeçalho ganha fundo depois de rolar */
+    .nav-shell {
+      animation: nav-solid linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 160px;
+    }
+  }
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes h-word {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(0.45em);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+@keyframes tr-word {
+  from {
+    opacity: 0.14;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes tilt-in {
+  from {
+    opacity: 0.35;
+    transform: perspective(1400px) rotateX(26deg) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1400px) rotateX(0deg) scale(1);
+  }
+}
+@keyframes trace {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes dot-on {
+  from {
+    background: var(--bg);
+    border-color: var(--line-strong);
+    box-shadow: none;
+  }
+  to {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 5px var(--glow), 0 0 22px var(--accent);
+  }
+}
+@keyframes footer-rise {
+  from {
+    opacity: 0;
+    transform: translateY(30%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes nav-solid {
+  from {
+    background-color: transparent;
+    border-color: transparent;
+  }
+  to {
+    background-color: color-mix(in oklab, var(--bg) 72%, transparent);
+    border-color: var(--line);
+  }
+}
+
+/* ============================================================
+   GlowCard — "Spotlight Card" (21st.dev / jahed)
+   --x/--y/--xp/--yp vêm do <html> (Effects.tsx)
+   ============================================================ */
+.glow-card {
+  --radius: 18;
+  --border: 1.5;
+  --backdrop: var(--glass);
+  --backup-border: var(--line);
+  --size: 220;
+  --outer: 1;
+  --saturation: 100;
+  --lightness: 66;
+  --bg-spot-opacity: 0.09;
+  --border-spot-opacity: 0.9;
+  --border-light-opacity: 0.55;
+  --border-size: calc(var(--border, 2) * 1px);
+  --spotlight-size: calc(var(--size, 150) * 1px);
+  --hue: calc(var(--base) + (var(--xp, 0) * var(--spread, 0)));
+  position: relative;
+  border-radius: calc(var(--radius) * 1px);
+  background-image: radial-gradient(
+    var(--spotlight-size) var(--spotlight-size) at calc(var(--x, -999) * 1px) calc(var(--y, -999) * 1px),
+    hsl(var(--hue, 220) calc(var(--saturation) * 1%) calc(var(--lightness) * 1%) / var(--bg-spot-opacity)),
+    transparent
+  );
+  background-color: var(--backdrop, transparent);
+  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+  background-position: 50% 50%;
+  background-attachment: fixed;
+  border: var(--border-size) solid var(--backup-border);
+  box-shadow: 0 1rem 2rem -1rem rgb(0 0 0 / 0.6);
+}
+:root[data-theme="light"] .glow-card {
+  --lightness: 52;
+  --bg-spot-opacity: 0.07;
+  --border-light-opacity: 0;
+  box-shadow: 0 1rem 2rem -1.4rem rgb(0 0 0 / 0.25);
+}
+[data-glow]::before,
+[data-glow]::after {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  inset: calc(var(--border-size) * -1);
+  border: var(--border-size) solid transparent;
+  border-radius: calc(var(--radius) * 1px);
+  background-attachment: fixed;
+  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  mask-clip: padding-box, border-box;
+  mask-composite: intersect;
+}
+[data-glow]::before {
+  background-image: radial-gradient(
+    calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at calc(var(--x, -999) * 1px) calc(var(--y, -999) * 1px),
+    hsl(var(--hue, 220) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity, 1)),
+    transparent 100%
+  );
+  filter: brightness(2);
+}
+[data-glow]::after {
+  background-image: radial-gradient(
+    calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at calc(var(--x, -999) * 1px) calc(var(--y, -999) * 1px),
+    hsl(0 100% 100% / var(--border-light-opacity, 1)),
+    transparent 100%
+  );
+}
+[data-glow] [data-glow] {
+  position: absolute;
+  inset: 0;
+  will-change: filter;
+  opacity: var(--outer, 1);
+  border-radius: calc(var(--radius) * 1px);
+  border-width: calc(var(--border-size) * 20);
+  filter: blur(calc(var(--border-size) * 10));
+  background: none;
+  pointer-events: none;
+  border: none;
+}
+[data-glow] > [data-glow]::before {
+  inset: -10px;
+  border-width: 10px;
+}
+
+/* ============================================================
+   Cinematic Footer — "Motion Footer" (21st.dev / jahed)
+   ============================================================ */
+.cinematic-footer {
+  --pill-bg-1: color-mix(in oklch, var(--fg) 4%, transparent);
+  --pill-bg-2: color-mix(in oklch, var(--fg) 1%, transparent);
+  --pill-shadow: color-mix(in oklch, var(--bg) 50%, transparent);
+  --pill-highlight: color-mix(in oklch, var(--fg) 10%, transparent);
+  --pill-inset-shadow: color-mix(in oklch, var(--bg) 80%, transparent);
+  --pill-border: color-mix(in oklch, var(--fg) 9%, transparent);
+  --pill-bg-1-hover: color-mix(in oklch, var(--fg) 9%, transparent);
+  --pill-bg-2-hover: color-mix(in oklch, var(--fg) 2%, transparent);
+  --pill-border-hover: color-mix(in oklch, var(--fg) 22%, transparent);
+  --pill-shadow-hover: color-mix(in oklch, var(--bg) 70%, transparent);
+  --pill-highlight-hover: color-mix(in oklch, var(--fg) 20%, transparent);
+}
+@keyframes footer-breathe {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+}
+@keyframes footer-scroll-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes footer-heartbeat {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px color-mix(in oklch, var(--accent) 50%, transparent)); }
+  15%, 45% { transform: scale(1.2); filter: drop-shadow(0 0 10px color-mix(in oklch, var(--accent) 80%, transparent)); }
+  30% { transform: scale(1); }
+}
+.animate-footer-breathe {
+  transform: translate(-50%, -50%);
+  animation: footer-breathe 8s ease-in-out infinite alternate;
+}
+.animate-footer-scroll-marquee {
+  animation: footer-scroll-marquee 40s linear infinite;
+}
+.animate-footer-heartbeat {
+  display: inline-block;
+  animation: footer-heartbeat 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+.footer-bg-grid {
+  background-size: 60px 60px;
+  background-image:
+    linear-gradient(to right, color-mix(in oklch, var(--fg) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklch, var(--fg) 4%, transparent) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+}
+.footer-aurora {
+  background: radial-gradient(
+    circle at 50% 50%,
+    color-mix(in oklch, var(--accent) 22%, transparent) 0%,
+    color-mix(in oklch, var(--accent-2) 12%, transparent) 40%,
+    transparent 70%
+  );
+}
+.footer-glass-pill {
+  background: linear-gradient(145deg, var(--pill-bg-1) 0%, var(--pill-bg-2) 100%);
+  box-shadow:
+    0 10px 30px -10px var(--pill-shadow),
+    inset 0 1px 1px var(--pill-highlight),
+    inset 0 -1px 2px var(--pill-inset-shadow);
+  border: 1px solid var(--pill-border);
+  backdrop-filter: blur(16px);
+  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, box-shadow 0.4s, color 0.4s;
+}
+.footer-glass-pill:hover {
+  background: linear-gradient(145deg, var(--pill-bg-1-hover) 0%, var(--pill-bg-2-hover) 100%);
+  border-color: var(--pill-border-hover);
+  box-shadow:
+    0 20px 40px -10px var(--pill-shadow-hover),
+    inset 0 1px 1px var(--pill-highlight-hover);
+  color: var(--fg);
+}
+.footer-giant-bg-text {
+  font-size: 26vw;
+  line-height: 0.75;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in oklch, var(--fg) 6%, transparent);
+  background: linear-gradient(180deg, color-mix(in oklch, var(--fg) 12%, transparent) 0%, transparent 60%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.footer-text-glow {
+  background: linear-gradient(180deg, var(--fg) 0%, color-mix(in oklch, var(--fg) 45%, transparent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px color-mix(in oklch, var(--fg) 15%, transparent));
+}
+
+/* ============================================================
+   Marquee (inspirado no "Marquee" do 21st.dev / Magic UI)
+   ============================================================ */
+.marquee {
+  --gap: 0.75rem;
+  display: flex;
+  gap: var(--gap);
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.marquee__track {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--gap);
+  min-width: 100%;
+  justify-content: space-around;
+  animation: marquee var(--dur, 45s) linear infinite;
+}
+.marquee--rev .marquee__track {
+  animation-direction: reverse;
+}
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+/* Sublinhado animado para links grandes */
+.link-underline {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0% 1px no-repeat;
+  transition: background-size 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* Fluxo animado dos diagramas */
 @keyframes flow {
   to {
     stroke-dashoffset: -20;
@@ -143,47 +732,46 @@ body {
 .pulse-dot {
   animation: pulse-dot 2s ease-in-out infinite;
 }
-@media (prefers-reduced-motion: reduce) {
-  .flow-line,
-  .pulse-dot {
-    animation: none;
-  }
-  .packet {
-    display: none;
-  }
+
+/* Animações pausam quando o bloco sai da tela (Effects.tsx) */
+[data-paused] *,
+[data-paused] *::before,
+[data-paused] *::after {
+  animation-play-state: paused !important;
 }
 
-/* ---------- Revelação ao rolar (só CSS, sem JS) ---------- */
-@keyframes reveal {
-  from {
-    opacity: 0;
-    transform: translateY(22px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .reveal {
-      animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 30%;
-    }
-  }
-}
-
-/* ---------- Seções fora da tela não são renderizadas nem animadas ---------- */
+/* Seções fora da tela não são renderizadas */
 .cv-auto {
   content-visibility: auto;
   contain-intrinsic-size: auto 1100px;
 }
 
-/* ---------- Barra de rolagem dos diagramas ---------- */
+/* Barra de rolagem dos diagramas */
 .scroll-x {
   overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--line-strong) transparent;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Quem prefere menos movimento: tudo parado e visível */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .blur-in,
+  .fade-up,
+  .spotlight {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+  .packet,
+  .scroll-cue::after {
+    display: none;
+  }
 }

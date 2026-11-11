@@ -7,6 +7,17 @@ Site pessoal com experiência, projetos de engenharia de dados (com diagramas de
 
 Feito com Next.js (App Router, export estático), TypeScript e Tailwind CSS. Ícones de marca: [simple-icons](https://simpleicons.org) (CC0).
 
+### Créditos de efeitos ([21st.dev](https://21st.dev/community/components))
+
+| Efeito no site | Componente de origem | Onde |
+|---|---|---|
+| Cartões com brilho que segue o mouse | Spotlight Card (`GlowCard`) | `components/ui/spotlight-card.tsx` |
+| Rodapé "cortina" com GSAP, texto gigante e botões magnéticos | Motion Footer (`CinematicFooter`) | `components/ui/motion-footer.tsx` |
+| Linhas animadas no fundo do topo | Background Paths (kokonutd) | `components/Hero.tsx` |
+| Holofote, palavras que trocam, órbita da foto, texto que acende no scroll, feixe da linha do tempo, painel 3D que assenta no scroll, marquee | Inspirados em Spotlight, Flip Words, Radial Orbital, Text Reveal, Tracing Beam, Container Scroll e Marquee — reescritos em CSS (scroll-driven animations) | `app/globals.css` |
+
+Scroll suave: [Lenis](https://lenis.darkroom.engineering). Animações do rodapé: [GSAP](https://gsap.com) (licença gratuita).
+
 ## Como atualizar
 
 Todo o conteúdo fica em dois arquivos. Cada texto tem versão `pt` e `en`:
