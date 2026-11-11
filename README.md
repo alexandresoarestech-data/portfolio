@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfólio · Alexandre Soares — Engenheiro de Dados
 
-## Getting Started
+Site pessoal com experiência, projetos de engenharia de dados (com diagramas de arquitetura em SVG), laboratório, Zenith Tech e contato. Em português e inglês, com tema escuro e claro.
 
-First, run the development server:
+- **Principal (Vercel):** https://alexandresoares.vercel.app
+- **Espelho (GitHub Pages):** https://alexandresoarestech-data.github.io/portfolio/
+
+Feito com Next.js (App Router, export estático), TypeScript e Tailwind CSS. Ícones de marca: [simple-icons](https://simpleicons.org) (CC0).
+
+## Como atualizar
+
+Todo o conteúdo fica em dois arquivos. Cada texto tem versão `pt` e `en`:
+
+| O que mudar | Arquivo |
+|---|---|
+| Resumo, links, contatos, experiência, stack, formação, cursos, idiomas, Zenith Tech | `data/profile.ts` |
+| Projetos em destaque (e os diagramas), laboratório, loja Eli Soares (e o diagrama ER) | `data/projects.ts` |
+| Títulos de seção e botões | `lib/i18n.ts` |
+| Currículo em PDF | substitua `public/cv/Alexandre-Soares-CV-Engenheiro-de-Dados.pdf` |
+| Foto | `assets/alexandre-soares.webp` (retrato 4:5) e `assets/avatar.webp` (quadrada) |
+
+Os diagramas são gerados a partir de `diagram.stages` em `data/projects.ts`: cada estágio tem título, tom (`source`, `ingest`, `event`, `bronze`, `silver`, `gold`, `consume`) e nós (`label`, `detail`, `icon`).
+
+Depois de editar:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev        # confira em http://localhost:3000
+git add .
+git commit -m "Atualiza portfólio"
+git push           # Vercel e GitHub Pages publicam sozinhos
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Rodar localmente
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm install
+npm run dev
+npm run build      # gera o site estático em out/
+```
