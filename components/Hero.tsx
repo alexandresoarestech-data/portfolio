@@ -13,13 +13,13 @@ type Vars = CSSProperties & Record<`--${string}`, string | number>;
 /** Linhas que correm ao fundo (adaptado do "Background Paths" — kokonutd, 21st.dev, MIT). */
 function BackgroundPaths() {
   const make = (pos: number) =>
-    Array.from({ length: 16 }, (_, i) => {
-      const o = i * 5 * pos;
-      const v = i * 6;
+    Array.from({ length: 12 }, (_, i) => {
+      const o = i * 7 * pos;
+      const v = i * 8;
       return {
         d: `M-${380 - o} -${189 + v}C-${380 - o} -${189 + v} -${312 - o} ${216 - v} ${152 - o} ${343 - v}C${616 - o} ${470 - v} ${684 - o} ${875 - v} ${684 - o} ${875 - v}`,
-        w: 0.4 + i * 0.03,
-        op: 0.05 + i * 0.016,
+        w: 0.4 + i * 0.04,
+        op: 0.05 + i * 0.021,
         dur: 16 + ((i * 7) % 13),
       };
     });
@@ -66,7 +66,7 @@ function PortraitOrbit({ lang }: { lang: Lang }) {
       <div aria-hidden="true" className="orbit-spin" style={{ "--dur": "80s" } as Vars}>
         {outer.map((k, i) => (
           <div key={k} className="orbit-item" style={{ "--a": `${(i * 360) / outer.length}deg`, "--r": "46cqw" } as Vars}>
-            <div className="orbit-upright border border-line bg-surface/85 text-fg-soft shadow-[0_8px_30px_-12px_rgb(0_0_0/0.8)] backdrop-blur" title={techName(k)}>
+            <div className="orbit-upright border border-line bg-surface text-fg-soft shadow-[0_8px_30px_-12px_rgb(0_0_0/0.8)]" title={techName(k)}>
               <TechIcon name={k} size={20} />
             </div>
           </div>
@@ -75,7 +75,7 @@ function PortraitOrbit({ lang }: { lang: Lang }) {
       <div aria-hidden="true" className="orbit-spin orbit-spin--rev" style={{ "--dur": "55s" } as Vars}>
         {inner.map((k, i) => (
           <div key={k} className="orbit-item" style={{ "--a": `${(i * 360) / inner.length + 45}deg`, "--r": "34cqw", "--s": "10cqw" } as Vars}>
-            <div className="orbit-upright border border-line bg-surface/85 text-fg-soft backdrop-blur" title={techName(k)}>
+            <div className="orbit-upright border border-line bg-surface text-fg-soft" title={techName(k)}>
               <TechIcon name={k} size={17} />
             </div>
           </div>

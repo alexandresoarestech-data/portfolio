@@ -93,7 +93,7 @@ function Section({
 }
 
 function MonoLabel({ children }: { children: ReactNode }) {
-  return <h4 className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted">{children}</h4>;
+  return <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted">{children}</p>;
 }
 
 /* ---------------- Sobre ---------------- */

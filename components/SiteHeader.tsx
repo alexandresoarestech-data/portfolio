@@ -44,7 +44,7 @@ export function SiteHeader({ lang }: { lang: Lang }) {
         {tr(ui.skip, lang)}
       </a>
       <div className="nav-shell mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 rounded-full border border-line bg-bg/70 pl-1.5 pr-1.5 backdrop-blur-xl">
-        <a href="#topo" className="group flex items-center gap-3 rounded-full pr-3" aria-label={lang === "pt" ? "Alexandre Soares, início" : "Alexandre Soares, home"}>
+        <a href="#topo" className="group flex items-center gap-3 rounded-full pr-3">
           <Image
             src={avatar}
             alt=""
@@ -53,7 +53,7 @@ export function SiteHeader({ lang }: { lang: Lang }) {
             priority
             className="size-[42px] rounded-full border border-line-strong object-cover transition-[box-shadow] group-hover:shadow-[0_0_0_3px_var(--glow)]"
           />
-          <span className="hidden leading-tight sm:block">
+          <span className="sr-only sm:not-sr-only sm:block sm:leading-tight">
             <span className="block text-sm font-semibold tracking-tight text-fg">Alexandre Soares</span>
             <span className="block font-mono text-[10.5px] text-muted">{lang === "pt" ? "Engenheiro de Dados" : "Data Engineer"}</span>
           </span>
@@ -76,10 +76,10 @@ export function SiteHeader({ lang }: { lang: Lang }) {
             href={asset(otherHref)}
             hrefLang={lang === "pt" ? "en" : "pt-BR"}
             className={`${iconBtn} font-mono text-[11px] font-semibold`}
-            aria-label={tr(ui.switchLang, lang)}
             title={tr(ui.switchLang, lang)}
           >
             {lang === "pt" ? "EN" : "PT"}
+            <span className="sr-only"> · {tr(ui.switchLang, lang)}</span>
           </a>
           <button type="button" onClick={toggleTheme} className={iconBtn} aria-label={lang === "pt" ? "Alternar tema claro/escuro" : "Toggle light/dark theme"}>
             <UiIcon name="sun" size={17} className="only-dark" />
